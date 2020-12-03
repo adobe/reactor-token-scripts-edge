@@ -3,6 +3,9 @@
   "version": "1.1.0",
   "description": "Node binary used in transforming the edge container to valid JS.",
   "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "jest",
     "lint": "eslint 'src/**'",
