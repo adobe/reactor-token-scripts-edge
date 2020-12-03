@@ -54,7 +54,7 @@ module.exports = (
               // Remove the data element object so we can keep only the names.
               ObjectExpression: (path) => {
                 path.replaceWith(t.stringLiteral(''));
-              },
+              }
             },
             path.scope
           );
@@ -63,7 +63,7 @@ module.exports = (
           const definedDataElements = Object.keys(dataElementsObject);
           tokens = difference(tokens, definedDataElements);
         }
-      },
+      }
     });
   }
 

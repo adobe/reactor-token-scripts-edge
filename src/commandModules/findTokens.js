@@ -21,17 +21,17 @@ exports.builder = (yargs) =>
     .option('filePath', {
       describe: 'container.js file path',
       demandOption: true,
-      type: 'string',
+      type: 'string'
     })
     .option('unique', {
       describe: 'Return a deduplicated list of token names',
-      type: 'boolean',
+      type: 'boolean'
     })
     .option('onlyUndefined', {
       describe:
         'Returns only token names that do not have a data element definition inside ' +
         'the container.js file.',
-      type: 'boolean',
+      type: 'boolean'
     })
     .coerce('filePath', (arg) => require('fs').readFileSync(arg, 'utf8'))
     .example(

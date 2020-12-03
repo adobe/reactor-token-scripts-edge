@@ -24,11 +24,11 @@ exports.builder = (yargs) =>
     .option('filePath', {
       describe: 'container.js file path',
       demandOption: true,
-      type: 'string',
+      type: 'string'
     })
     .option('outPath', {
       describe: 'save the sanitized content to a new file path',
-      type: 'string',
+      type: 'string'
     })
     .example('$0 --filePath <path>', 'Returns the sanitized JS code to output.')
     .example(
