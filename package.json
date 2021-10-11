@@ -10,7 +10,8 @@
     "test": "jest",
     "lint": "eslint 'src/**'",
     "debug:findTokens": "node cli.js findTokens --filePath ./test/fixtures/findTokens/container.js --onlyUndefined",
-    "debug:sanitize": "node cli.js sanitize --filePath ./test/fixtures/sanitize/container.js"
+    "debug:sanitize": "node cli.js sanitize --filePath ./test/fixtures/sanitize/container.js",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
