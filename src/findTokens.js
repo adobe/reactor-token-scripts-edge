@@ -40,7 +40,7 @@ module.exports = (
     CallExpression: (path) => {
       if (path.node.callee.name === 'getDataElementValue') {
         const tokenNameNode = path.node.arguments[0];
-        tokens.push(tokenNameNode.value);
+        tokens.push(tokenNameNode.name || tokenNameNode.value);
       }
     }
   });

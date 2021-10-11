@@ -146,7 +146,7 @@ module.exports = (getDataElementValues) => ({
                   const y6 = 'some getDataElementValue(\'core560\')';
                   getDataElementValue('core561');
                   getDataElementValue('core562');
-
+                  getDataElementValue(reactor00650032);
                   //getDataElementValue('commented');
 
                   const z = 5 + getDataElementValue('core');
