@@ -1,6 +1,6 @@
 {
   "name": "@adobe/reactor-token-scripts-edge",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Node binary used in transforming the edge container to valid JS.",
   "main": "index.js",
   "publishConfig": {
