@@ -24,10 +24,56 @@ module.exports = (
 ) => {
   const r = RegExp(getTokenPattern(onlyEnclosedInQuotes), 'g');
   let tokens = [];
+  let definedDataElements = [];
 
-  while ((res = r.exec(containerString)) !== null) {
-    tokens.push(res[1]);
-  }
+  const ast = parse(containerString);
+
+  // The following code is used to find tokens.
+  traverse(ast, {
+    StringLiteral: (path) => {
+      const stringValue = path.node.value;
+
+      while ((res = r.exec(stringValue)) !== null) {
+        tokens.push(res[1]);
+      }
+    },
+    CallExpression: (path) => {
+      if (path.node.callee.name === 'getDataElementValue') {
+        const tokenNameNode = path.node.arguments[0];
+        tokens.push(tokenNameNode.value);
+      }
+    }
+  });
+
+  // Here we search for the data elements keys that are defined in the container.
+  // ATTENTION: This code transforms the ast, so generate a new ast if you need to
+  // do something new.
+  traverse(ast, {
+    ObjectProperty: (path) => {
+      const keyName = path.node.key.name || path.node.key.value;
+
+      if (keyName === 'dataElements') {
+        // Remove any function since they cannont be JSON.parsed.
+        traverse(
+          path.node.value,
+          {
+            // Replace identifiers with strings key names.
+            Identifier: (path) => {
+              path.replaceWith(t.stringLiteral(path.node.name));
+            },
+            // Remove the data element object so we can keep only the names.
+            ObjectExpression: (path) => {
+              path.replaceWith(t.stringLiteral(''));
+            }
+          },
+          path.scope
+        );
+
+        const dataElementsObject = JSON.parse(generate(path.node.value).code);
+        definedDataElements = Object.keys(dataElementsObject);
+      }
+    }
+  });
 
   if (unique) {
     tokens = tokens.filter(
@@ -36,35 +82,7 @@ module.exports = (
   }
 
   if (onlyUndefined) {
-    const ast = parse(containerString);
-
-    traverse(ast, {
-      ObjectProperty: (path) => {
-        const keyName = path.node.key.name || path.node.key.value;
-
-        if (keyName === 'dataElements') {
-          // Remove any function since they cannont be JSON.parsed.
-          traverse(
-            path.node.value,
-            {
-              // Replace identifiers with strings key names.
-              Identifier: (path) => {
-                path.replaceWith(t.stringLiteral(path.node.name));
-              },
-              // Remove the data element object so we can keep only the names.
-              ObjectExpression: (path) => {
-                path.replaceWith(t.stringLiteral(''));
-              }
-            },
-            path.scope
-          );
-
-          const dataElementsObject = JSON.parse(generate(path.node.value).code);
-          const definedDataElements = Object.keys(dataElementsObject);
-          tokens = difference(tokens, definedDataElements);
-        }
-      }
-    });
+    tokens = difference(tokens, definedDataElements);
   }
 
   return tokens;

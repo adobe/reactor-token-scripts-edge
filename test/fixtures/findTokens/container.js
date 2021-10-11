@@ -142,9 +142,12 @@ module.exports = (getDataElementValues) => ({
                   const y2 = "some getDataElementValue('core556')";
                   const y3 = "some getDataElementValue('core557')";
                   const y4 = 'some getDataElementValue("core558")';
+                  const y5 = "some getDataElementValue(\"core559\")";
+                  const y6 = 'some getDataElementValue(\'core560\')';
+                  getDataElementValue('core561');
+                  getDataElementValue('core562');
 
-                  getDataElementValue('core559');
-                  getDataElementValue('core560');
+                  //getDataElementValue('commented');
 
                   const z = 5 + getDataElementValue('core');
                   const z2 = 5 + getDataElementValue('core') + 5;
