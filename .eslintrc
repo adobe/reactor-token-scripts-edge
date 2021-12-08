@@ -4,6 +4,9 @@
     "node": true
   },
   "extends": ["plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
   "rules": {
     "camelcase": [2, { "properties": "always" }],
     "indent": [2, 2, { "SwitchCase": 1 }], // 2 spaces indentation

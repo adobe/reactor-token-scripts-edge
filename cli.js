@@ -15,4 +15,5 @@ require('yargs')
   .scriptName('reactor-token-scripts-edge')
   .usage('Usage: $0 <command> [options]')
   .command(require('./src/commandModules/findTokens'))
+  .command(require('./src/commandModules/detectAddToResponseCall'))
   .command(require('./src/commandModules/sanitize')).argv;
