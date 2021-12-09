@@ -124,11 +124,33 @@ describe('detect add to responser call', () => {
     expect(detectAddToResponseCall(fixture)).toBe(true);
   });
 
-  test.only('should return true for case11', () => {
+  test('should return true for case11', () => {
     const fixture = fs.readFileSync(
       path.join(
         __dirname,
         '../../test/fixtures/detectAddToResponseCall/addToResponseCall11.js'
+      ),
+      'utf8'
+    );
+    expect(detectAddToResponseCall(fixture)).toBe(true);
+  });
+
+  test('should return true for case12', () => {
+    const fixture = fs.readFileSync(
+      path.join(
+        __dirname,
+        '../../test/fixtures/detectAddToResponseCall/addToResponseCall12.js'
+      ),
+      'utf8'
+    );
+    expect(detectAddToResponseCall(fixture)).toBe(true);
+  });
+
+  test('should return true for case13', () => {
+    const fixture = fs.readFileSync(
+      path.join(
+        __dirname,
+        '../../test/fixtures/detectAddToResponseCall/addToResponseCall13.js'
       ),
       'utf8'
     );

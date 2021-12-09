@@ -150,6 +150,10 @@ const getBindingFor = (searchVariableName, variableName) => (binding) => {
       } else {
         return null;
       }
+    } else if (node.type === 'Identifier') {
+      if (node.name === searchVariableName) {
+        return binding;
+      }
     } else {
       binding = null;
     }
@@ -177,7 +181,11 @@ const isModuleExportsParameter = (binding) => {
 
   return (
     ['Identifier', 'ObjectPattern'].includes(node.type) &&
-    ['ArrowFunctionExpression', 'FunctionExpression'].includes(path.parent.type)
+    [
+      'ArrowFunctionExpression',
+      'FunctionExpression',
+      'FunctionDeclaration'
+    ].includes(path.parent.type)
   );
 };
 
@@ -220,17 +228,9 @@ module.exports = (moduleSource) => {
 
   traverse(ast, {
     AssignmentExpression: (path) => {
-      const { node } = path;
-      if (
-        node?.left?.type !== 'MemberExpression' ||
-        node?.left?.object?.name !== 'module' ||
-        node?.left?.property?.name !== 'exports'
-      ) {
-        path.stop();
-        return;
-      }
-
-      path.stop();
+      path.traverse(addToResponseVisitor);
+    },
+    FunctionDeclaration: (path) => {
       path.traverse(addToResponseVisitor);
     }
   });
