@@ -26,7 +26,9 @@ module.exports = (
   let tokens = [];
   let definedDataElements = [];
 
-  const ast = parse(containerString);
+  const ast = parse(containerString, {
+    allowImportExportEverywhere: true
+  });
 
   // The following code is used to find tokens.
   traverse(ast, {
